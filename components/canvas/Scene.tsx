@@ -11,6 +11,7 @@ export function Scene({ children }: { children: React.ReactNode }) {
                 camera={{ position: [0, 0, 5], fov: 45 }}
                 dpr={[1, 2]}
                 gl={{ antialias: true, alpha: true }}
+                style={{ background: 'transparent' }}
             >
                 <Suspense fallback={null}>
                     <Environment preset="studio" />

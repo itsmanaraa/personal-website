@@ -1,32 +1,189 @@
 @import "tailwindcss";
 
+/* ============================================
+   ELITE 2025+ DESIGN SYSTEM
+   Ultra-clean, light-first, editorial aesthetic
+   ============================================ */
+
 @theme {
-  --color-background: #050505;
-  --color-foreground: #F2F2F2;
-  --color-muted: #A1A1AA;
-  --color-surface: #18181B;
-  --color-accent: #3B82F6;
-  --color-accent-glow: rgba(59, 130, 246, 0.5);
+  /* LIGHT MODE (Primary) */
+  --color-background: #FEFEFE;
+  --color-background-alt: #F8F8F8;
+  --color-foreground: #000000;
+  --color-muted: #444444;
+  --color-muted-light: #888888;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FBFBFB;
 
+  /* ACCENT COLORS */
+  --color-accent: #4F9EFF;
+  --color-accent-light: #7BB5FF;
+  --color-accent-dark: #2E7FD9;
+  --color-accent-glow: rgba(79, 158, 255, 0.15);
+  --color-graphite: #2C2C2C;
+  --color-silver: #C0C0C0;
+
+  /* BORDERS */
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-border-strong: rgba(0, 0, 0, 0.15);
+
+  /* TYPOGRAPHY */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Consolas, monospace;
 }
 
-:root {
-  --background: #050505;
-  --foreground: #F2F2F2;
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-background: #0A0A0A;
+    --color-background-alt: #121212;
+    --color-foreground: #FFFFFF;
+    --color-muted: #949494;
+    --color-muted-light: #666666;
+    --color-surface: #141414;
+    --color-surface-elevated: #1A1A1A;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-border-strong: rgba(255, 255, 255, 0.15);
+  }
 }
 
-body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Force dark mode when .dark class is present */
+.dark {
+  --color-background: #0A0A0A;
+  --color-background-alt: #121212;
+  --color-foreground: #FFFFFF;
+  --color-muted: #949494;
+  --color-muted-light: #666666;
+  --color-surface: #141414;
+  --color-surface-elevated: #1A1A1A;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
 }
 
-/* Lenis Recommended CSS */
-html.lenis, html.lenis body {
+/* UTILITY CLASSES */
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility text-pretty {
+  text-wrap: pretty;
+}
+
+/* GLASSMORPHISM UTILITIES */
+@layer utilities {
+  .glass-light {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .glass-light-strong {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .glass-dark {
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-dark-strong {
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  /* NEUMORPHISM UTILITIES (use sparingly) */
+  .neuro-raised-light {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05), -4px -4px 8px rgba(255, 255, 255, 0.7);
+  }
+
+  .neuro-pressed-light {
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.05), inset -2px -2px 4px rgba(255, 255, 255, 0.7);
+  }
+
+  .neuro-raised-dark {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5), -4px -4px 8px rgba(255, 255, 255, 0.02);
+  }
+
+  .neuro-pressed-dark {
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.5), inset -2px -2px 4px rgba(255, 255, 255, 0.02);
+  }
+
+  /* GLOW EFFECTS */
+  .glow-accent {
+    box-shadow: 0 0 20px var(--color-accent-glow);
+  }
+
+  .glow-accent-strong {
+    box-shadow: 0 0 40px var(--color-accent-glow);
+  }
+
+  /* NEGATIVE SPACE EMPHASIS */
+  .negative-space {
+    padding: clamp(2rem, 5vw, 4rem);
+  }
+
+  .negative-space-xl {
+    padding: clamp(4rem, 10vw, 8rem);
+  }
+}
+
+/* BASE STYLES */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern", "liga", "calt";
+  }
+
+  /* Editorial typography emphasis */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  /* Clean selection */
+  ::selection {
+    background: var(--color-accent-glow);
+    color: var(--color-accent-dark);
+    text-shadow: 0 0 8px var(--color-accent-glow);
+  }
+
+  .dark ::selection {
+    background: var(--color-accent);
+    color: var(--color-background);
+  }
+
+  /* Smooth focus states */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+/* SMOOTH SCROLLING (Lenis) */
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -44,4 +201,16 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

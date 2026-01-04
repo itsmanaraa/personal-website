@@ -1,0 +1,200 @@
+{
+    "experience": [
+        {
+            "id": 1,
+            "role": "Senior Quantitative Developer",
+            "company": "Citadel Securities",
+            "period": "2023 - Present",
+            "location": "New York, NY",
+            "description": "Leading the development of low-latency trading execution strategies. Optimized C++ matching engine reducing latency by 40%.",
+            "skills": [
+                "C++",
+                "Python",
+                "FPGA",
+                "System Design"
+            ],
+            "viewModes": {
+                "recruiter": {
+                    "highlight": [
+                        "Leadership",
+                        "Team collaboration",
+                        "40% latency reduction"
+                    ],
+                    "emphasis": "role"
+                },
+                "founder": {
+                    "highlight": [
+                        "System architecture",
+                        "Performance optimization",
+                        "Technical leadership"
+                    ],
+                    "emphasis": "impact"
+                },
+                "technical": {
+                    "highlight": [
+                        "C++",
+                        "FPGA",
+                        "Low-latency systems",
+                        "Matching engine design"
+                    ],
+                    "emphasis": "depth"
+                }
+            }
+        },
+        {
+            "id": 2,
+            "role": "Machine Learning Engineer",
+            "company": "DeepMind",
+            "period": "2021 - 2023",
+            "location": "London, UK",
+            "description": "Researched and deployed reinforcement learning models for large-scale infrastructure optimization. Published 2 papers at NeurIPS.",
+            "skills": [
+                "PyTorch",
+                "JAX",
+                "Distributed Systems"
+            ],
+            "viewModes": {
+                "recruiter": {
+                    "highlight": [
+                        "Research experience",
+                        "Published papers",
+                        "Large-scale impact"
+                    ],
+                    "emphasis": "role"
+                },
+                "founder": {
+                    "highlight": [
+                        "Research → Production",
+                        "Infrastructure optimization",
+                        "Scientific rigor"
+                    ],
+                    "emphasis": "impact"
+                },
+                "technical": {
+                    "highlight": [
+                        "Reinforcement learning",
+                        "PyTorch",
+                        "JAX",
+                        "Distributed systems"
+                    ],
+                    "emphasis": "depth"
+                }
+            }
+        },
+        {
+            "id": 3,
+            "role": "Software Engineer",
+            "company": "Palantir Technologies",
+            "period": "2019 - 2021",
+            "location": "Palo Alto, CA",
+            "description": "Built data integration pipelines processing petabytes of data daily. Architected secure data sharing protocols.",
+            "skills": [
+                "Java",
+                "Spark",
+                "React",
+                "TypeScript"
+            ],
+            "viewModes": {
+                "recruiter": {
+                    "highlight": [
+                        "Data engineering",
+                        "Security",
+                        "Scale"
+                    ],
+                    "emphasis": "role"
+                },
+                "founder": {
+                    "highlight": [
+                        "Petabyte-scale systems",
+                        "Security architecture",
+                        "Full-stack"
+                    ],
+                    "emphasis": "impact"
+                },
+                "technical": {
+                    "highlight": [
+                        "Spark",
+                        "Data pipelines",
+                        "Security protocols",
+                        "TypeScript"
+                    ],
+                    "emphasis": "depth"
+                }
+            }
+        }
+    ],
+    "education": [
+        {
+            "id": 1,
+            "degree": "M.S. Computer Science",
+            "school": "Stanford University",
+            "period": "2017 - 2019",
+            "description": "Specialization in Artificial Intelligence and Systems."
+        },
+        {
+            "id": 2,
+            "degree": "B.S. Electrical Engineering",
+            "school": "MIT",
+            "period": "2013 - 2017",
+            "description": "Minor in Mathematics. GPA 4.0/4.0"
+        }
+    ],
+    "skills": [
+        {
+            "category": "Languages",
+            "items": [
+                "C++",
+                "Rust",
+                "Python",
+                "TypeScript",
+                "Go",
+                "Solidity"
+            ],
+            "cluster": "core"
+        },
+        {
+            "category": "Technologies",
+            "items": [
+                "React",
+                "Next.js",
+                "Docker",
+                "Kubernetes",
+                "AWS",
+                "GCP"
+            ],
+            "cluster": "infrastructure"
+        },
+        {
+            "category": "Machine Learning",
+            "items": [
+                "PyTorch",
+                "TensorFlow",
+                "CUDA",
+                "Computer Vision",
+                "NLP"
+            ],
+            "cluster": "ai"
+        },
+        {
+            "category": "Core",
+            "items": [
+                "System Design",
+                "Distributed Systems",
+                "Algorithms",
+                "Cryptography"
+            ],
+            "cluster": "fundamentals"
+        }
+    ],
+    "settings": {
+        "email": "iammanaranaqvi@gmail.com",
+        "formSubmitEmail": "iammanaranaqvi@gmail.com",
+        "location": "New York, NY",
+        "socials": {
+            "github": "https://github.com",
+            "linkedin": "https://linkedin.com",
+            "twitter": "https://twitter.com"
+        },
+        "resumePdf": "/resume.pdf"
+    }
+}

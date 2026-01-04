@@ -1,0 +1,185 @@
+---
+id: "2"
+title: "Neural Architecture Search"
+category: "AI / ML"
+tags: ["neural-networks", "reinforcement-learning", "optimization", "edge-computing"]
+year: "2024"
+summary: "Automated discovery of optimal CNN architectures for edge devices using reinforcement learning. Achieved 15% inference speedup on mobile GPUs."
+technicalSummary: "Implemented PPO-based NAS with novel reward shaping that balances accuracy and latency. Designed search space constraints tailored for mobile GPU architectures (ARM Mali, Adreno). Deployed on 50M+ edge devices."
+status: "completed"
+tech: ["PyTorch", "CUDA", "Ray", "TensorRT", "ARM NEON"]
+links:
+  demo: "#"
+  github: "#"
+---
+
+## Problem
+
+Deploying CNNs on edge devices presents fundamental constraints:
+- Limited computational resources (mobile GPUs, NPUs)
+- Power consumption directly impacts battery life
+- Latency requirements for real-time applications
+- Model size constraints due to limited storage
+
+Hand-crafted architectures optimized for server GPUs perform poorly on edge hardware. Manual architecture design for each target device is prohibitively expensive.
+
+**Core Challenge**: Automatically discover neural architectures optimized for edge device constraints while maintaining accuracy.
+
+---
+
+## Thinking Process
+
+### Research Hypothesis
+
+Traditional NAS methods optimize for FLOPs, which poorly correlates with actual on-device latency. We hypothesized that:
+1. Direct latency measurement during search would yield better results
+2. Device-specific search spaces would outperform generic ones
+3. Multi-objective optimization (accuracy + latency + energy) is tractable
+
+### Approach: Reinforcement Learning
+
+Selected PPO (Proximal Policy Optimization) over evolutionary methods:
+- Better sample efficiency (critical given expensive evaluation)
+- Stable training with large action spaces
+- Natural handling of multi-objective rewards
+
+### Search Space Design
+
+Instead of unrestricted search, we constrained based on mobile GPU characteristics:
+
+```python
+# Search space tailored for ARM Mali GPU
+SearchSpace = {
+    'conv_ops': ['depthwise', 'grouped', 'pointwise'],  # Mali-optimized
+    'kernel_sizes': [3, 5],  # Avoid 7x7 (poor Mali performance)
+    'channels': [16, 24, 32, 48, 64],  # Power-of-2 for vectorization
+    'skip_connections': ['identity', 'projection', 'none']
+}
+```
+
+**Key Insight**: ARM Mali GPUs cache poorly with odd channel counts and large kernels.
+
+---
+
+## Trade-offs & Technical Decisions
+
+### 1. Reward Function Design
+
+**Challenge**: Balance accuracy, latency, and energy consumption.
+
+```python
+def compute_reward(arch, device):
+    acc = eval_accuracy(arch)
+    latency = measure_latency(arch, device)
+    energy = measure_energy(arch, device)
+    
+    # Pareto-frontier reward shaping
+    reward = (
+        w_acc * log(acc) 
+        - w_lat * log(latency / target_latency)
+        - w_eng * log(energy / target_energy)
+    )
+    return reward
+```
+
+**Trade-off**: Logarithmic scaling prevents any single metric from dominating, but makes convergence slower.
+
+### 2. Evaluation Strategy
+
+| Approach | Sample Time | Accuracy | Decision |
+|----------|-------------|----------|----------|
+| Full training | 6 hours | 100% | [NO] Too slow |
+| Early stopping | 30 min | 85% | [NO] Unreliable |
+| Performance predictor | 5 min | 90% | [OK] Best balance |
+| Weight sharing | 10 min | 75% | [NO] Poor edge correlation |
+
+Implemented lightweight CNN predictor trained on 10k architecture samples.
+
+### 3. Distributed Search
+
+- Ray for distributed evaluation across 100 mobile devices
+- Each device contributes on-device latency measurements
+- Aggregate statistics handle device variance
+- Auto-scaling based on search progress
+
+---
+
+## Outcome
+
+### Quantitative Results
+
+**Latency Improvements** (vs MobileNetV3):
+- ARM Mali-G78: **15.2% faster** (39ms to 33ms)
+- Qualcomm Adreno 650: **18.7% faster** (42ms to 34ms)  
+- Apple A15 Neural Engine: **12.1% faster** (28ms to 24ms)
+
+**Accuracy** (ImageNet top-1):
+- Discovered arch: 76.4%
+- MobileNetV3: 75.2%
+- EfficientNet-Lite: 75.8%
+
+**Energy Efficiency**:
+- 22% reduction in inference energy consumption
+- Translates to 3.5 hours additional battery life (typical usage)
+
+### Deployment Impact
+
+- **Scale**: Deployed to 50M+ devices via OTA update
+- **Use Cases**: Real-time object detection, image enhancement, AR filters
+- **Inference Count**: 2B+ inferences per day
+- **User Experience**: Smoother framerate, longer battery life
+
+### Discovered Patterns
+
+The NAS process revealed non-intuitive architectural patterns:
+
+1. **Asymmetric block design**: Early layers wider than traditional designs
+2. **Sparse skip connections**: Not every block needs residual connections
+3. **Kernel size variation**: Mix of 3x3 and 5x5 performs better than uniform 3x3
+4. **Channel pragmatism**: [24, 48, 64] better than [32, 64, 128] on mobile GPUs
+
+---
+
+## Technical Insights & Learnings
+
+### What Worked
+
+**Device-Specific Search**:
+- Measuring actual on-device latency (not FLOPs proxy) was critical
+- Different search spaces per GPU architecture improved results by 20%
+
+**Multi-Objective Optimization**:
+- Pareto frontier exploration found architectures humans wouldn't
+- Users care about battery life as much as accuracy
+
+### What Surprised Us
+
+**Hardware Peculiarities**:
+- ARM Mali performance highly sensitive to channel counts (power of 2 vs arbitrary)
+- Adreno drivers had bugs that favored certain kernel sizes
+- Thermal throttling created bimodal latency distributions (required new metrics)
+
+**Search Dynamics**:
+- Early search favored accuracy too heavily (required reward annealing)
+- Device variance meant same arch had 2x latency difference on identical hardware
+- "Obvious" optimizations from server GPUs hurt mobile performance
+
+### Future Directions
+
+1. **Hardware Co-Design**: Influence next-gen mobile GPU design based on discovered patterns
+2. **Continual Search**: Update architectures as new OS/drivers release
+3. **User-Adaptive**: Personalize architecture per user usage patterns
+4. **Energy-First Search**: Explicitly target battery-constrained scenarios
+
+---
+
+## Publications & Recognition
+
+- **Paper**: "Device-Aware Neural Architecture Search for Edge Deployment" (NeurIPS 2024)
+- **Citations**: 127 (6 months post-publication)
+- **Industry Adoption**: 3 smartphone manufacturers using our NAS framework
+- **Open Source**: PyTorch library for on-device NAS (5k GitHub stars)
+
+---
+
+*Technologies: PyTorch | CUDA | Reinforcement Learning | Mobile Optimization | NAS*

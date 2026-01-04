@@ -1,0 +1,12 @@
+{
+    "greeting": "Hello World",
+    "name": "MANARA",
+    "lastName": "NAQVI",
+    "role": "SYSTEMS & INTELLIGENCE",
+    "subRole": "<AI_Enthusiast />",
+    "aboutTitle": "Engineering the Impossible",
+    "aboutText1": "I am a multidisciplinary engineer focused on the intersection of high-frequency systems, artificial intelligence, and immersive design.",
+    "aboutText2": "My work pushes the boundaries of what's possible in the browser and beyond, creating experiences that feel less like software and more like magic.",
+    "aboutText3": "Currently building next-generation trading infrastructure and exploring the frontiers of generative art.",
+    "footerRole": "SYSTEMS_ARCHITECT // CREATIVE_CODER"
+}
